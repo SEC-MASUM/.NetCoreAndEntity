@@ -1,0 +1,24 @@
+﻿
+@{
+    ViewData["Title"] = "GetAll";
+}
+
+<h2>Student List</h2>
+
+<table class="table table-bordered">
+    @foreach (var item in ViewBag.StudentData)
+    {
+        <tr>
+            <td>@item.StudentName</td>
+            <td>@item.RegNo</td>
+            <td>@item.Email</td>
+            <td>@item.Address</td>
+            <td>@item.Department</td>
+        </tr>
+
+    }
+
+</table>
+
+
+
