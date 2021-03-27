@@ -10,19 +10,37 @@ namespace WebAppDotNetCoreAndEntity.Controllers
 {
     public class StudentController : Controller
     {
-        public string SaveStudent(Student student)
+        public ActionResult SaveStudent()
         {
-            SqlConnection con = new SqlConnection("Data Source=HP; Initial Catalog=UniversityDBbatch49;Integrated Security=true");
+            ViewBag.Department = GetDepartments();
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult SaveStudent(Student student)
+        {
+            string msg = "";
+            SqlConnection con = new SqlConnection("Data Source=WHATEVER\\SQLEXPRESS; Initial Catalog=UniversityDBbatch49;Integrated Security=true");
             con.Open();
             string quary = "INSERT INTO Student_tb (StudentName, RegNo, Email, Address, Department) VALUES('" + student.StudentName + "', '" + student.RegNo + "', '" + student.Email + "', '" + student.Address + "', '" + student.Department + "' )";
             SqlCommand cmd = new SqlCommand(quary,con);
             int rowCount = cmd.ExecuteNonQuery();
             if (rowCount > 0)
             {
-                return "Saved data successfully";
+                msg = "Saved data successfully";
             }
+            else
+            {
+                msg = "Save faild";
+            }
+            ViewBag.Department = GetDepartments();
+            ViewBag.Message = msg;
+            return View();
+        }
 
-            return "Save faild";
+        public List<string> GetDepartments()
+        {
+            return new List<string> { "CSE", "EEE", "ME", "CE" };
         }
 
         public ActionResult Index()
@@ -40,8 +58,8 @@ namespace WebAppDotNetCoreAndEntity.Controllers
 
         public ActionResult GetAll()
         {
-            ViewBag.StudentData = Students();
-            return View();
+            //ViewBag.StudentData = Students();
+            return View(Students());
         }
 
         public List<Student> Students()
