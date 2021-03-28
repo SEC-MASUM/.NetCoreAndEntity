@@ -1,12 +1,13 @@
-﻿
+﻿@model List<WebAppDotNetCoreAndEntity.Models.Student>
 @{
     ViewData["Title"] = "GetAll";
 }
 
-<h2>Student List</h2>
+<h2>Student List  </h2>
 
 <table class="table table-bordered">
-    @foreach (var item in ViewBag.StudentData)
+    @*@foreach (var item in ViewBag.StudentData)*@
+    @foreach (var item in Model)
     {
         <tr>
             <td>@item.StudentName</td>
