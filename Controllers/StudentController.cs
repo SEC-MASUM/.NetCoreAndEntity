@@ -20,7 +20,7 @@ namespace WebAppDotNetCoreAndEntity.Controllers
         public ActionResult SaveStudent(Student student)
         {
             string msg = "";
-            SqlConnection con = new SqlConnection("Data Source=WHATEVER\\SQLEXPRESS; Initial Catalog=UniversityDBbatch49;Integrated Security=true");
+            SqlConnection con = new SqlConnection("Data Source=HP; Initial Catalog=UniversityDBbatch49;Integrated Security=true");
             con.Open();
             string quary = "INSERT INTO Student_tb (StudentName, RegNo, Email, Address, Department) VALUES('" + student.StudentName + "', '" + student.RegNo + "', '" + student.Email + "', '" + student.Address + "', '" + student.Department + "' )";
             SqlCommand cmd = new SqlCommand(quary,con);
@@ -62,27 +62,15 @@ namespace WebAppDotNetCoreAndEntity.Controllers
             return View(Students());
         }
 
-        public List<Student> Students()
+        public List<Student> GetStudents()
         {
-            return new List<Student>
-            {
-                new Student
-                {
-                    StudentName = "Arif",
-                    RegNo = 2012331,
-                    Email = "arif@gmail.com",
-                    Address = "Rajshahi",
-                    Department = "CSE"
-                },
-                new Student
-                {
-                    StudentName = "Saif",
-                    RegNo = 2011331,
-                    Email = "saif@gmail.com",
-                    Address = "Rajshahi",
-                    Department = "CSE"
-                }
-            };
+            SqlConnection con = new SqlConnection("Data Source=HP; Initial Catalog=UniversityDBbatch49;Integrated Security=true");
+            String query = "SELECT * FROM Student_tb";
+            SqlCommand cmd = new SqlCommand(query, con);
+            con.Open();
+            SqlDataReader reader = cmd.ExecuteReader();
+            List<Student> students = new List<Student>;
+
 
         }
     }
