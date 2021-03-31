@@ -25,13 +25,26 @@
         <td>@Html.TextBoxFor(c => c.Address, new { @class = "form-control"})</td>
     </tr>
     <tr>
-        <td>@Html.LabelFor(c => c.Department)</td>
-        <td>@Html.DropDownListFor(c => c.Department, new SelectList(ViewBag.Department), "---Select---", new { @class = "form-control"})</td>
+        <td>@Html.LabelFor(c => c.DepartmentId)</td>
+        <td>@Html.DropDownListFor(c => c.DepartmentId, new SelectList(ViewBag.Department,"Id","ShortName"), "---Select---", new { @class = "form-control"})</td>
     </tr>
     <tr>
         <td></td>
         <td><input type="submit" class="btn btn-default" value="Save"/></td>
     </tr>
+</table>
+<table class=" table table-bordered">
+    @foreach (var item in ViewBag.Students as List<Student>)
+    {
+        <tr>
+            <td>@item.StudentName</td>
+            <td>@item.RegNo</td>
+            <td>@item.Email</td>
+            <td>@item.Address</td>
+            <td>@item.DepartmentId</td>
+        </tr>
+    }
+
 </table>
 }
 
