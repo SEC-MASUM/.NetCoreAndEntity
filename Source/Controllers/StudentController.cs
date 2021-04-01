@@ -21,19 +21,23 @@ namespace WebAppDotNetCoreAndEntity.Controllers
         public ActionResult SaveStudent(Student student)
         {
             string msg = "";
-            SqlConnection con = new SqlConnection("Data Source=HP; Initial Catalog=UniversityDBbatch49;Integrated Security=true");
-            con.Open();
-            string quary = "INSERT INTO Student_tb (StudentName, RegNo, Email, Address, DepartmentId) VALUES('" + student.StudentName + "', '" + student.RegNo + "', '" + student.Email + "', '" + student.Address + "', '" + student.DepartmentId + "' )";
-            SqlCommand cmd = new SqlCommand(quary,con);
-            int rowCount = cmd.ExecuteNonQuery();
-            if (rowCount > 0)
+            if (ModelState.IsValid)
             {
-                msg = "Saved data successfully";
+                SqlConnection con = new SqlConnection("Data Source=HP; Initial Catalog=UniversityDBbatch49;Integrated Security=true");
+                string quary = "INSERT INTO Student_tb (StudentName, RegNo, Email, Address, DepartmentId) VALUES('" + student.StudentName + "', '" + student.RegNo + "', '" + student.Email + "', '" + student.Address + "', '" + student.DepartmentName + "' )";
+                SqlCommand cmd = new SqlCommand(quary, con);
+                con.Open();
+                int rowCount = cmd.ExecuteNonQuery();
+                if (rowCount > 0)
+                {
+                    msg = "Saved data successfully";
+                }
+                else
+                {
+                    msg = "Save faild";
+                }
             }
-            else
-            {
-                msg = "Save faild";
-            }
+
             ViewBag.Department = GetDepartments();
             ViewBag.Students = GetStudents();
             ViewBag.Message = msg;
@@ -63,10 +67,8 @@ namespace WebAppDotNetCoreAndEntity.Controllers
         public List<Student> GetStudents()
         {
             SqlConnection con = new SqlConnection("Data Source=HP; Initial Catalog=UniversityDBbatch49;Integrated Security=true");
-            String query = "SELECT * FROM Student_tb";
+            String query = "SELECT * FROM vStudentInfo";
             SqlCommand cmd = new SqlCommand(query, con);
-            String queryDept = "SELECT * FROM Department_tb WHERE Id=";
-            SqlCommand cmdDept = new SqlCommand(queryDept, con);
             con.Open();
             SqlDataReader reader = cmd.ExecuteReader();
             List<Student> students = new List<Student>();
@@ -77,8 +79,7 @@ namespace WebAppDotNetCoreAndEntity.Controllers
                 student.RegNo = (int)reader["RegNo"];
                 student.Email = reader["Email"].ToString();
                 student.Address = reader["Address"].ToString();
-                student.DepartmentId = (int)reader["DepartmentId"];
-                student.DepartmentName = 
+                student.DepartmentName = reader["DepartmentName"].ToString();
                 students.Add(student);
             }
             con.Close();

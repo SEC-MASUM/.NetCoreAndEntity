@@ -11,6 +11,7 @@
     <tr>
         <td>@Html.LabelFor(c => c.StudentName)</td>
         <td>@Html.TextBoxFor(c => c.StudentName, new { @class = "form-control" })</td>
+        <td>@Html.ValidationMessageFor(c =>c.StudentName)</td>
     </tr>
     <tr>
         <td>@Html.LabelFor(c => c.RegNo)</td>
@@ -19,14 +20,15 @@
     <tr>
         <td>@Html.LabelFor(c => c.Email)</td>
         <td>@Html.TextBoxFor(c => c.Email, new { @class = "form-control" })</td>
+        <td>@Html.ValidationMessageFor(c => c.Email)</td>
     </tr>
     <tr>
         <td>@Html.LabelFor(c => c.Address)</td>
         <td>@Html.TextBoxFor(c => c.Address, new { @class = "form-control"})</td>
     </tr>
     <tr>
-        <td>@Html.LabelFor(c => c.DepartmentId)</td>
-        <td>@Html.DropDownListFor(c => c.DepartmentId, new SelectList(ViewBag.Department,"Id","ShortName"), "---Select---", new { @class = "form-control"})</td>
+        <td>@Html.LabelFor(c => c.DepartmentName)</td>
+        <td>@Html.DropDownListFor(c => c.DepartmentName, new SelectList(ViewBag.Department,"Id","ShortName"), "---Select---", new { @class = "form-control"})</td>
     </tr>
     <tr>
         <td></td>
@@ -34,14 +36,22 @@
     </tr>
 </table>
 <table class=" table table-bordered">
+    <tr>
+        <th>Student Name</th>
+        <th>Reg No</th>
+        <th>Email</th>
+        <th>Address</th>
+        <th>Department</th>
+    </tr>
     @foreach (var item in ViewBag.Students as List<Student>)
     {
+
         <tr>
             <td>@item.StudentName</td>
             <td>@item.RegNo</td>
             <td>@item.Email</td>
             <td>@item.Address</td>
-            <td>@item.DepartmentId</td>
+            <td>@item.DepartmentName</td>
         </tr>
     }
 
